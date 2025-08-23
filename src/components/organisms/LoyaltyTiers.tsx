@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle, Gem, Crown, Star } from 'lucide-react';
+import { CheckCircle, Gem, Crown, Star, Trophy } from 'lucide-react';
 import { MEMBERSHIP_TIERS } from '../../utils/constants';
 import { useApp } from '../../context/AppContext';
 import { Button } from '../atoms/Button';

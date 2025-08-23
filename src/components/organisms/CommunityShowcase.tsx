@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Users, Heart, ArrowRight } from 'lucide-react';
 import { Button } from '../atoms/Button';
+import { Link } from 'react-router-dom';
 
 const communityPosts = [
   {
@@ -84,10 +85,12 @@ export const CommunityShowcase: React.FC = () => {
           viewport={{ once: true }}
           className="text-center"
         >
-          <Button variant="outline" size="lg" className="group">
-            View Gallery
-            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-          </Button>
+          <Link to="/community">
+            <Button variant="outline" size="lg" className="group">
+              Join Community
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
         </motion.div>
       </div>
     </section>

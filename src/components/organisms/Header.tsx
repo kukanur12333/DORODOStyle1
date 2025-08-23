@@ -64,8 +64,8 @@ export const Header: React.FC = () => {
     exit: { opacity: 0, y: -10, transition: { duration: 0.2 } },
   };
 
-  const openCommandPalette = () => {
-    dispatch({ type: 'TOGGLE_COMMAND_PALETTE' });
+  const openSearchModal = () => {
+    dispatch({ type: 'TOGGLE_SEARCH_MODAL' });
   };
 
   return (
@@ -134,15 +134,21 @@ export const Header: React.FC = () => {
           <div className="flex items-center gap-2 md:gap-4">
             <div className="hidden md:block">
               <button
-                onClick={openCommandPalette}
-                className="flex items-center gap-2 text-sm text-gray-500 border rounded-full py-2 px-4 w-48 hover:bg-gray-50 transition-colors"
+                onClick={openSearchModal}
+                className="flex items-center gap-2 text-sm text-gray-500 border rounded-full py-2 px-4 w-64 hover:bg-gray-50 hover:border-gray-300 transition-colors"
               >
                 <Search size={16} />
-                Search...
+                Search for styles, brands...
                 <kbd className="ml-auto text-xs font-sans bg-gray-100 rounded px-1.5 py-0.5">⌘K</kbd>
               </button>
             </div>
             
+            <div className="md:hidden">
+                <button onClick={openSearchModal} className="p-2 text-gray-600 hover:text-primary-black transition-colors">
+                    <Search size={22} />
+                </button>
+            </div>
+
             <div className="relative hidden lg:block"
               onMouseEnter={() => setIsUserMenuOpen(true)}
               onMouseLeave={() => setIsUserMenuOpen(false)}

@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Preloader } from './components/organisms/Preloader';
 import { CommandPalette } from './components/organisms/CommandPalette';
+import { SearchModal } from './components/organisms/SearchModal';
+import { DailyRewardModal } from './components/molecules/DailyRewardModal';
 import { MainLayout } from './components/layouts/MainLayout';
 
 // Pages
@@ -24,17 +26,18 @@ import { PromotionsPage } from './pages/PromotionsPage';
 import { LoginPage } from './pages/LoginPage';
 import { SignUpPage } from './pages/SignUpPage';
 import { PlayToEarnPage } from './pages/PlayToEarnPage';
+import { SearchPage } from './pages/SearchPage';
 
 // Context
 import { AppProvider, useApp } from './context/AppContext';
 
 const AppContent: React.FC = () => {
-  const { dispatch } = useApp();
-  const [isLoading, setIsLoading] = useState(true);
+  const { state, dispatch } = useApp();
+  const [isAppLoading, setIsAppLoading] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIsLoading(false);
+      setIsAppLoading(false);
     }, 2500); // Simulate loading for 2.5 seconds
 
     return () => clearTimeout(timer);
@@ -44,16 +47,29 @@ const AppContent: React.FC = () => {
     const down = (e: KeyboardEvent) => {
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        dispatch({ type: 'TOGGLE_COMMAND_PALETTE' });
+        dispatch({ type: 'TOGGLE_SEARCH_MODAL' });
       }
     };
     document.addEventListener('keydown', down);
     return () => document.removeEventListener('keydown', down);
   }, [dispatch]);
 
+  const handleCloseRewardModal = () => {
+    dispatch({ type: 'HIDE_DAILY_REWARD' });
+  };
+
+  const isLoading = state.isLoading || isAppLoading;
+
   return (
     <>
       <CommandPalette />
+      <SearchModal />
+      <DailyRewardModal
+        isOpen={!!state.dailyReward}
+        onClose={handleCloseRewardModal}
+        points={state.dailyReward?.points || 0}
+        streak={state.dailyReward?.streak || 0}
+      />
       <AnimatePresence mode="wait">
         {isLoading ? (
           <Preloader key="preloader" />
@@ -70,6 +86,7 @@ const AppContent: React.FC = () => {
                 <Route element={<MainLayout />}>
                   <Route path="/" element={<HomePage />} />
                   <Route path="/shop" element={<ShopPage />} />
+                  <Route path="/search" element={<SearchPage />} />
                   <Route path="/product/:id" element={<ProductDetailPage />} />
                   <Route path="/cart" element={<CartPage />} />
                   <Route path="/ai-studio" element={<AIStudioPage />} />

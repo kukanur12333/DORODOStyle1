@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Tag } from 'lucide-react';
+import { ArrowRight, Zap } from 'lucide-react';
 import { Button } from '../atoms/Button';
 import { CountdownCard } from '../molecules/CountdownCard';
 
 export const OfferTimer: React.FC = () => {
   const calculateTimeLeft = () => {
-    const difference = +new Date('2025-12-31T23:59:59') - +new Date();
+    // Set timer for next 24 hours from now
+    const endTime = new Date();
+    endTime.setHours(endTime.getHours() + 24);
+    const difference = +endTime - +new Date();
     let timeLeft = {};
 
     if (difference > 0) {
@@ -31,9 +34,8 @@ export const OfferTimer: React.FC = () => {
     return () => clearTimeout(timer);
   });
 
-  const timerComponents = timeLeft.days !== undefined ? (
+  const timerComponents = timeLeft.hours !== undefined ? (
     <div className="flex items-center justify-center gap-4 md:gap-8">
-      <CountdownCard value={timeLeft.days} label="Days" />
       <CountdownCard value={timeLeft.hours} label="Hours" />
       <CountdownCard value={timeLeft.minutes} label="Minutes" />
       <CountdownCard value={timeLeft.seconds} label="Seconds" />
@@ -43,7 +45,7 @@ export const OfferTimer: React.FC = () => {
   );
 
   return (
-    <section className="py-20 bg-gradient-to-r from-gray-900 via-black to-gray-800 text-white relative overflow-hidden">
+    <section className="py-20 bg-gradient-to-r from-red-500 via-primary-red to-yellow-400 text-white relative overflow-hidden">
       <div
         className="absolute inset-0 bg-cover bg-center opacity-10"
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1555529669-e69e7aa0ba9e?w=1200&fit=crop')" }}
@@ -56,16 +58,16 @@ export const OfferTimer: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="text-center"
         >
-          <div className="inline-flex items-center gap-2 bg-primary-red/20 border border-primary-red/30 rounded-full px-4 py-2 mb-6">
-            <Tag size={16} className="text-primary-red" />
-            <span className="text-sm font-montserrat text-red-300">Limited Time Offer</span>
+          <div className="inline-flex items-center gap-2 bg-white/20 border border-white/30 rounded-full px-4 py-2 mb-6">
+            <Zap size={16} className="text-white" />
+            <span className="text-sm font-montserrat text-white">Flash Sale</span>
           </div>
 
           <h2 className="text-3xl md:text-5xl font-bold font-montserrat text-white mb-6">
-            Exclusive Winter Collection Drop
+            Flat 30% Off + Free NFT with Every Hoodie
           </h2>
-          <p className="text-lg text-gray-300 font-poppins max-w-2xl mx-auto mb-12">
-            Be the first to own pieces from our AI-curated Winter '25 collection. This offer ends soon!
+          <p className="text-lg text-gray-200 font-poppins max-w-2xl mx-auto mb-12">
+            This is not a drill! For the next 24 hours, get a massive discount and a unique digital collectible.
           </p>
 
           <div className="mb-12">
@@ -73,7 +75,7 @@ export const OfferTimer: React.FC = () => {
           </div>
 
           <Button variant="gold" size="xl" className="group">
-            Shop The Drop
+            Grab The Deal
             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </Button>
         </motion.div>

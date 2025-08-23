@@ -42,8 +42,8 @@ export const CommandPalette: React.FC = () => {
     <Command.Dialog
       open={state.isCommandPaletteOpen}
       onOpenChange={() => dispatch({ type: 'TOGGLE_COMMAND_PALETTE' })}
-      label="Global Command Menu"
       className="fixed inset-0 z-50"
+      label="Command Palette"
     >
       <div className="fixed inset-0 bg-black/50" />
       <div className="fixed top-1/2 left-1/2 w-full max-w-xl -translate-x-1/2 -translate-y-1/2">
